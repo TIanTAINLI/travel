@@ -36,4 +36,15 @@ public class UserServiceImpl implements UserService {
         MailUtils.sendMail(user.getEmail(), content, "激活邮件");
         return true;
     }
+
+    /**
+     * 激活用户
+     *
+     * @param code
+     * @return
+     */
+    @Override
+    public boolean active(String code) {
+        return false;
+    }
 }

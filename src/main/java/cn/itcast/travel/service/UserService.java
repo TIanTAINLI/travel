@@ -10,4 +10,6 @@ public interface UserService {
      * @return
      */
     boolean regist(User user);
+
+    boolean active(String code);
 }
