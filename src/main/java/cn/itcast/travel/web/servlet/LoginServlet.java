@@ -50,6 +50,7 @@ public class LoginServlet extends HttpServlet {
         if (u != null && "Y".equals(u.getStatus())) {
             //登录成功
             info.setFlag(true);
+            request.getSession().setAttribute("user",u);
         }
         //响应数据
         ObjectMapper mapper = new ObjectMapper();
