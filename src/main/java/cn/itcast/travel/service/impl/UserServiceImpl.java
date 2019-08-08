@@ -11,6 +11,10 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean regist(User user) {
+        //1. 根据用户名查询用户对象
+
+        //2. 保存用户信息
+
         return false;
     }
 }
