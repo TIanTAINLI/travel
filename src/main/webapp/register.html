@@ -74,7 +74,16 @@
 			$(function () {
 				//当表单提交时候, 调用所有的校验方法
 				$('#registerForm').submit(function () {
-					return checkUsername()&&checkPassword()&&checkEmail();
+				    //1. 发送数据到服务器
+                    if(checkUsername()&&checkPassword()&&checkEmail()){
+                        //校验通过, 发送ajax请求, 提交表单的数据
+                        $.post('registerUserServlet',$(this).serialize(),function (data) {
+                            //处理服务器响应的数据 data
+                        });
+                    }
+                    //2. 跳转页面 false代表不提交表单(验证失败)
+                    return false;
+                    //3.
 					//如果这个方法没有返回值, 或者返回为true, 则表单提交; 如果返回为false, 则表单不提交.
 				});
 				//当某一个组件失去焦点时, 调用对应的校验方法
