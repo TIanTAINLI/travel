@@ -14,10 +14,15 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByUsername(String username) {
-        //1. 定义SQL
-        String sql = "select * from tab_user where username=?";
-        //2. 执行SQL
-        User user = template.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username);
+        User user = null;
+        try {
+            //1. 定义SQL
+            String sql = "select * from tab_user where username=?";
+            //2. 执行SQL
+            user = template.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
