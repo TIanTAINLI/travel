@@ -28,6 +28,9 @@ public class RouteServlet extends BaseServlet {
         String currentPageStr = request.getParameter("currentPage");
         String pageSizeStr = request.getParameter("pageSize");
         String cidStr = request.getParameter("cid");
+        //接收rname线路名称
+        String rname = request.getParameter("rname");
+        rname=new String(rname.getBytes("iso-8859-1"),"utf-8");
         //2. 处理参数
         int cid = 0;//类别id
         if (cidStr != null && cidStr.length() > 0) {
@@ -46,7 +49,7 @@ public class RouteServlet extends BaseServlet {
             pageSize = 5;
         }
         //3. 调用Service查询pageBean对象
-        PageBean<Route> pb = routeService.pageQuery(cid, currentPage, pageSize);
+        PageBean<Route> pb = routeService.pageQuery(cid, currentPage, pageSize, rname);
         //4. 将pageBean对象序列化为JSON
         writeValue(pb, response);
     }
