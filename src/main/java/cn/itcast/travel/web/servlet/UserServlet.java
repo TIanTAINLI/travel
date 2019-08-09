@@ -125,9 +125,10 @@ public class UserServlet extends BaseServlet {
             request.getSession().setAttribute("user", u);
         }
         //响应数据
-        ObjectMapper mapper = new ObjectMapper();
+        /*ObjectMapper mapper = new ObjectMapper();
         response.setContentType("application/json;charset=utf-8");
-        mapper.writeValue(response.getOutputStream(), info);
+        mapper.writeValue(response.getOutputStream(), info);*/
+        writeValue(info, response);
     }
 
     /**
@@ -141,9 +142,10 @@ public class UserServlet extends BaseServlet {
         //从Session中获取登录用户
         User user = (User) request.getSession().getAttribute("user");
         //将user写回客户端
-        ObjectMapper mapper = new ObjectMapper();
+        /*ObjectMapper mapper = new ObjectMapper();
         response.setContentType("application/json;charset=utf-8");
-        mapper.writeValue(response.getOutputStream(), user);
+        mapper.writeValue(response.getOutputStream(), user);*/
+        writeValue(user, response);
     }
 
     /**
