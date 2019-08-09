@@ -14,9 +14,13 @@
             var search=location.search;
             var cid=search.split('=')[1];
             // alert(cid);
+            //页面加载完成后, 调用load方法, 发送ajax请求加载数据
+            load(cid);
+        });
 
+        function load(cid,currentPage){
             //发送ajax请求, 请求route/pageQuery, 传递cid
-            $.get('route/pageQuery',{cid:cid},function (pb) {
+            $.get('route/pageQuery',{cid:cid,currentPage:currentPage},function (pb) {
                 //解析PageBean数据, 展示到页面上
 
                 //1. 分页工具条的数据展示
@@ -25,18 +29,33 @@
                 $('#totalCount').html(pb.totalCount);
                 //1.2 展示分页页码
                 var lis='';
-                var firstPage='<li><a href="">首页</a></li>';
-                var beforePage='<li class="threeword"><a href="#">上一页</a></li>';
+                var firstPage='<li onclick="javascript:load('+cid+')"><a href="javascript:void(0)">首页</a></li>';
+                //计算上一页的页码
+                var beforeNum=pb.currentPage-1;
+                if(beforeNum<=0){
+                    beforeNum=1;
+                }
+                var beforePage='<li onclick="javascript:load('+cid+','+beforeNum+')" class="threeword"><a href="javascript:void(0)">上一页</a></li>';
                 lis+=firstPage;
                 lis+=beforePage;
-                for (var i = 1; i < pb.totalPage; i++) {
-                    //创建页码的li
-                    var li='<li><a href="#">'+i+'</a></li>';
+                for (var i = 1; i < pb.totalPage+1; i++) {
+                    var li;
+                    //判断当前页码是否等于i
+                    if(pb.currentPage==i){
+                        li='<li class="curPage" onclick="javascript:load('+cid+','+i+')"><a href="javascript:void(0)">'+i+'</a></li>';
+                    }else{
+                        //创建页码的li
+                        li='<li onclick="javascript:load('+cid+','+i+')"><a href="javascript:void(0)">'+i+'</a></li>';
+                    }
                     //拼接字符串
                     lis+=li;
                 }
-                var lastPage='<li class="threeword"><a href="javascript:;">末页</a></li>';
-                var nextPage='<li class="threeword"><a href="javascript:;">下一页</a></li>';
+                var lastPage='<li onclick="javascript:load('+cid+','+pb.totalPage+')" class="threeword"><a href="javascript:void(0)">末页</a></li>';
+                var nextNum=pb.currentPage+1;
+                if(nextNum>=pb.totalPage){
+                    nextNum=pb.totalPage;
+                }
+                var nextPage='<li onclick="javascript:load('+cid+','+nextNum+')" class="threeword"><a href="javascript:void(0)">下一页</a></li>';
                 lis+=nextPage;
                 lis+=lastPage;
                 //将lis内容设置到ul中
@@ -48,26 +67,26 @@
                     //获取{rid:1, rname:'xxx'}
                     var route=pb.list[i];
                     var li='<li>\n' +
-    '                            <div class="img"><img src="'+route.rimage+'" style="width:299px;"></div>\n' +
-    '                            <div class="text1">\n' +
-    '                                <p>'+route.rname+'</p>\n' +
-    '                                <br/>\n' +
-    '                                <p>'+route.routeIntroduce+'</p>\n' +
-    '                            </div>\n' +
-    '                            <div class="price">\n' +
-    '                                <p class="price_num">\n' +
-    '                                    <span>&yen;</span>\n' +
-    '                                    <span>'+route.price+'</span>\n' +
-    '                                    <span>起</span>\n' +
-    '                                </p>\n' +
-    '                                <p><a href="route_detail.html">查看详情</a></p>\n' +
-    '                            </div>\n' +
-    '                        </li>';
+                        '                            <div class="img"><img src="'+route.rimage+'" style="width:299px;"></div>\n' +
+                        '                            <div class="text1">\n' +
+                        '                                <p>'+route.rname+'</p>\n' +
+                        '                                <br/>\n' +
+                        '                                <p>'+route.routeIntroduce+'</p>\n' +
+                        '                            </div>\n' +
+                        '                            <div class="price">\n' +
+                        '                                <p class="price_num">\n' +
+                        '                                    <span>&yen;</span>\n' +
+                        '                                    <span>'+route.price+'</span>\n' +
+                        '                                    <span>起</span>\n' +
+                        '                                </p>\n' +
+                        '                                <p><a href="route_detail.html">查看详情</a></p>\n' +
+                        '                            </div>\n' +
+                        '                        </li>';
                     route_lis+=li;
                 }
                 $('#route').html(route_lis);
             });
-        });
+        }
     </script>
 </head>
 <body>
