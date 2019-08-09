@@ -28,6 +28,7 @@ public class RouteServiceImpl implements RouteService {
         pb.setList(list);
         //设置总页数=总记录数/每页显示条数
         int totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : (totalCount / pageSize) + 1;
+        pb.setTotalPage(totalPage);
         return pb;
     }
 }
