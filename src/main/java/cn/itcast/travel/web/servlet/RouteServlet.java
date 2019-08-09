@@ -30,10 +30,10 @@ public class RouteServlet extends BaseServlet {
         String cidStr = request.getParameter("cid");
         //接收rname线路名称
         String rname = request.getParameter("rname");
-        rname=new String(rname.getBytes("iso-8859-1"),"utf-8");
+        rname = new String(rname.getBytes("iso-8859-1"), "utf-8");
         //2. 处理参数
         int cid = 0;//类别id
-        if (cidStr != null && cidStr.length() > 0) {
+        if (cidStr != null && cidStr.length() > 0 && !"null".equals(cidStr)) {
             cid = Integer.parseInt(cidStr);
         }
         int currentPage = 0;//当前页码, 如果不传递, 则默认为第一页
