@@ -15,6 +15,6 @@
 #### Dao层:
 1. MySQL：数据库
 2. Druid：数据库连接池
-3. sJDBCTemplate：Spring提供的JDBC的工具
+3. JDBCTemplate：Spring提供的JDBC的工具
 
 
