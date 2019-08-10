@@ -218,7 +218,10 @@
             if(flag){
                 //用户已经收藏过, 设置收藏按钮的样式
                 $('#favorite').addClass('already');
-                $('#favorite').prop('disabled',disabled);
+                //prop设置固有属性
+                $('#favorite').attr('disabled','disabled');
+                //删除按钮的点击事件
+                $('#favorite').removeAttr('onclick');
             }else{
                 //用户没有收藏
 
@@ -234,7 +237,8 @@
             if(user){
                 //用户登录了, 添加favorite功能
                 $.post('route/addFavorite',{rid:rid},function () {
-
+                    //代码刷新页面
+                    location.reload();
                 });
             }else{
                 //用户没有登录
