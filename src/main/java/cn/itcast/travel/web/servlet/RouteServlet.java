@@ -2,7 +2,10 @@ package cn.itcast.travel.web.servlet;
 
 import cn.itcast.travel.domain.PageBean;
 import cn.itcast.travel.domain.Route;
+import cn.itcast.travel.domain.User;
+import cn.itcast.travel.service.FavoriteService;
 import cn.itcast.travel.service.RouteService;
+import cn.itcast.travel.service.impl.FavoriteServiceImpl;
 import cn.itcast.travel.service.impl.RouteServiceImpl;
 
 import javax.servlet.ServletException;
@@ -14,6 +17,7 @@ import java.io.IOException;
 @WebServlet("/route/*")
 public class RouteServlet extends BaseServlet {
     private RouteService routeService = new RouteServiceImpl();
+    private FavoriteService favoriteService = new FavoriteServiceImpl();
 
     /**
      * 分页查询
@@ -56,6 +60,7 @@ public class RouteServlet extends BaseServlet {
 
     /**
      * 根据ID查询一个旅游线路的详细信息
+     *
      * @param request
      * @param response
      */
@@ -63,8 +68,33 @@ public class RouteServlet extends BaseServlet {
         //1. 接收ID
         String rid = request.getParameter("rid");
         //2. 调用Service查询Route对象
-        Route route=routeService.findOne(rid);
+        Route route = routeService.findOne(rid);
         //3. 转为JSON写回客户端
-        writeValue(route,response);
+        writeValue(route, response);
+    }
+
+    /**
+     * 判断当前登录用户是否收藏过该线路
+     *
+     * @param request
+     * @param response
+     */
+    public void isFavorite(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //1. 获取线路ID
+        String rid = request.getParameter("rid");
+        //2. 获取当前登录的用户user
+        User user = (User) request.getSession().getAttribute("user");
+        int uid;
+        if (user == null) {
+            //用户尚未登录
+            uid = 0;
+        } else {
+            //用户已经登录
+            uid = user.getUid();
+        }
+        //3. 调用FavoriteService查询是否收藏
+        boolean flag = favoriteService.isFavorite(rid, uid);
+        //4. 写回客户端
+        writeValue(flag, response);
     }
 }
