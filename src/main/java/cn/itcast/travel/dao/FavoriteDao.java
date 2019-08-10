@@ -11,4 +11,12 @@ public interface FavoriteDao {
      * @return
      */
     public Favorite findByRidAndUid(int rid, int uid);
+
+    /**
+     * 根据rid查询收藏次数
+     *
+     * @param rid
+     * @return
+     */
+    int findCountByRid(int rid);
 }
