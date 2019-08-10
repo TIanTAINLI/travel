@@ -34,7 +34,11 @@ public class RouteServlet extends BaseServlet {
         String cidStr = request.getParameter("cid");
         //接收rname线路名称
         String rname = request.getParameter("rname");
-        rname = new String(rname.getBytes("iso-8859-1"), "utf-8");
+        if (!"null".equals(rname) && !"undefined".equals(rname) && !"".equals(rname)) {
+            rname = new String(rname.getBytes("iso-8859-1"), "utf-8");
+        } else {
+            rname = "%";
+        }
         //2. 处理参数
         int cid = 0;//类别id
         if (cidStr != null && cidStr.length() > 0 && !"null".equals(cidStr)) {
@@ -100,10 +104,11 @@ public class RouteServlet extends BaseServlet {
 
     /**
      * 添加收藏
+     *
      * @param request
      * @param response
      */
-    public void addFavorite(HttpServletRequest request, HttpServletResponse response){
+    public void addFavorite(HttpServletRequest request, HttpServletResponse response) {
         //1. 获取线路rid
         String rid = request.getParameter("rid");
         //2. 获取当前登录的用户user
@@ -117,6 +122,6 @@ public class RouteServlet extends BaseServlet {
             uid = user.getUid();
         }
         //3. 调用Service添加
-        favoriteService.add(rid,uid);
+        favoriteService.add(rid, uid);
     }
 }

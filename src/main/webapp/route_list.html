@@ -33,7 +33,6 @@
             //发送ajax请求, 请求route/pageQuery, 传递cid
             $.get('route/pageQuery',{cid:cid,currentPage:currentPage,rname:rname},function (pb) {
                 //解析PageBean数据, 展示到页面上
-
                 //1. 分页工具条的数据展示
                 //1.1 展示总页码和总记录数
                 $('#totalPage').html(pb.totalPage);
@@ -101,12 +100,12 @@
                     //拼接字符串
                     lis+=li;
                 }*/
-                var lastPage='<li onclick="javascript:load('+cid+','+pb.totalPage+')" class="threeword"><a href="javascript:void(0)">末页</a></li>';
+                var lastPage='<li onclick="javascript:load('+cid+','+pb.totalPage+',\''+rname+'\')" class="threeword"><a href="javascript:void(0)">末页</a></li>';
                 var nextNum=pb.currentPage+1;
                 if(nextNum>=pb.totalPage){
                     nextNum=pb.totalPage;
                 }
-                var nextPage='<li onclick="javascript:load('+cid+','+nextNum+')" class="threeword"><a href="javascript:void(0)">下一页</a></li>';
+                var nextPage='<li onclick="javascript:load('+cid+','+nextNum+',\''+rname+'\')" class="threeword"><a href="javascript:void(0)">下一页</a></li>';
                 lis+=nextPage;
                 lis+=lastPage;
                 //将lis内容设置到ul中

@@ -5,7 +5,9 @@
        //查询用户信息
        $.get('user/findOne',{},function (data) {
            //{uid:1, name:'李四'}
-           var msg='欢迎回来, '+data.name;
+           if(data){
+               var msg='欢迎回来, '+data.name;
+           }
            $('#span_username').html(msg);
        });
 
