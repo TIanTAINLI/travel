@@ -68,7 +68,7 @@
                 <div class="pros_price">
                     <p class="price"><strong id="price">¥2699.00</strong><span>起</span></p>
                     <p class="collect">
-                        <a class="btn" id="favorite"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
+                        <a class="btn" id="favorite" onclick="addFavorite();"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
 
                         <!--<a  class="btn already" disabled="disabled"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>-->
                         <span id="favoriteCount">已收藏100次</span>
@@ -225,6 +225,24 @@
             }
         });
     });
+
+    //点击收藏按钮触发的方法
+    function addFavorite(){
+        var rid=getParameter('rid');
+        //1. 判断用户是否登录
+        $.get('user/findOne',{},function (user) {
+            if(user){
+                //用户登录了, 添加favorite功能
+                $.post('route/addFavorite',{rid:rid},function () {
+
+                });
+            }else{
+                //用户没有登录
+                alert('您尚未登录, 请登录!');
+                location.href='http://localhost/travel/login.html';
+            }
+        });
+    }
     </script>
 </body>
 
