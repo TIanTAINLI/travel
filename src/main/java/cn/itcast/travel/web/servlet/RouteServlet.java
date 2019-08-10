@@ -53,4 +53,18 @@ public class RouteServlet extends BaseServlet {
         //4. 将pageBean对象序列化为JSON
         writeValue(pb, response);
     }
+
+    /**
+     * 根据ID查询一个旅游线路的详细信息
+     * @param request
+     * @param response
+     */
+    public void findOne(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //1. 接收ID
+        String rid = request.getParameter("rid");
+        //2. 调用Service查询Route对象
+        Route route=routeService.findOne(rid);
+        //3. 转为JSON写回客户端
+        writeValue(route,response);
+    }
 }
